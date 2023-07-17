@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { IDatabaseConfig } from './db.interface';
+import { IDatabaseConfig } from '../interface/db.interface';
 
 dotenv.config();
 
