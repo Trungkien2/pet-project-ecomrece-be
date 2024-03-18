@@ -11,12 +11,19 @@ import { DatabaseModule } from './core/database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { LogsMiddleware, QueryMiddleware } from './core/middlewares';
+import { RouterModule } from '@nestjs/core';
+import { ApiRoute, allModule } from './router';
+import { PostModule } from './post/post.module';
+import { FavoriteModule } from './favorite/favorite.module';
 
 @Module({
   imports: [
     DatabaseModule,
     ConfigModule.forRoot({ isGlobal: true }),
-    UserModule,
+    // RouterModule.register(ApiRoute),
+    ...allModule,
+    PostModule,
+    FavoriteModule,
   ],
   controllers: [AppController],
   providers: [AppService],

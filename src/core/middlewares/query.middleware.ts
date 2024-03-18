@@ -72,7 +72,7 @@ export class QueryMiddleware implements NestMiddleware {
     } catch (ignore) {
       order = undefined;
     }
-    return order || [['updated_at', 'asc']];
+    return order || [['UpdatedAt', 'asc']];
   }
   _parseFields(req: any): any {
     let fields = req.query['fields'];
@@ -88,7 +88,7 @@ export class QueryMiddleware implements NestMiddleware {
     }
   }
   _parseAttribute(attrs: any) {
-    const attributes: any[] | any = ['id', 'created_at', 'updated_at'];
+    const attributes: any[] | any = ['id', 'created_at', 'UpdatedAt'];
     const includes: any[] = [];
     let isGetAll = false;
     let isSetParanoid = false;
