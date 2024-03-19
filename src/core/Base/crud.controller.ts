@@ -11,15 +11,19 @@ import {
   Query,
   Req,
   Request,
+  Res,
 } from '@nestjs/common';
 
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 import { QueryInfoDto } from '../interface/query-info.dto';
-import { CrudService } from './crud.service';
+import { CrudService, ICrudExecOption } from './crud.service';
 import { Public } from '../decorator/public.decorator';
 import { ApiQueryInfo, QueryInfo } from '../decorator/query-info.decorator';
 import { PublicPrivate } from '../decorator/public-private.decorator';
+import { Response, response } from 'express';
+import { config } from 'dotenv';
+import _ from 'lodash';
 
 @ApiBearerAuth()
 export class CrudController<T extends CrudService<any>> {
@@ -97,5 +101,52 @@ export class CrudController<T extends CrudService<any>> {
 
   async getModel() {
     return this.service._model;
+  }
+  onSuccess(object: any = {}, extras: any = {}) {
+    object = object || {};
+    if (Object.keys(object).length === 0) {
+      response.json({
+        code: 200,
+      });
+    } else {
+      response.json({
+        code: 200,
+        results: Object.assign(
+          {
+            object,
+          },
+          extras,
+        ),
+      });
+    }
+  }
+  onSuccessAsList(
+    res: Response,
+    objects: any = [],
+    extras: any = {},
+    option: {
+      offset: 0;
+      limit: 50;
+    },
+  ) {
+    if (objects.toJSON) {
+      objects = objects.toJSON();
+    }
+    const page = _.floor(option.offset / option.limit) + 1;
+    res.json({
+      code: 200,
+      results: Object.assign(
+        {
+          objects,
+        },
+        extras,
+      ),
+      pagination: {
+        current_page: page,
+        next_page: page + 1,
+        prev_page: page - 1,
+        limit: option.limit,
+      },
+    });
   }
 }

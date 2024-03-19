@@ -34,13 +34,6 @@ export class User extends Model<User> {
   email: string;
 
   @Column({
-    field: 'username',
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  username: string;
-
-  @Column({
     type: DataType.STRING,
     allowNull: false,
   })

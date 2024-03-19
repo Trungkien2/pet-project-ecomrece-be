@@ -88,7 +88,7 @@ export class QueryMiddleware implements NestMiddleware {
     }
   }
   _parseAttribute(attrs: any) {
-    const attributes: any[] | any = ['id', 'created_at', 'UpdatedAt'];
+    const attributes: any[] | any = ['id', 'CreatedAt', 'UpdatedAt'];
     const includes: any[] = [];
     let isGetAll = false;
     let isSetParanoid = false;

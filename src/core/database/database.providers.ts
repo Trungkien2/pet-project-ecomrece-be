@@ -96,7 +96,8 @@ const databaseProviders = [
   {
     provide: SEQUELIZE,
     useFactory: async () => {
-      return sequelize.sync();
+      // nếu sử dụng sync thì không cần phải miragiton
+      return sequelize.sync({ alter: true });
     },
   },
 ];
