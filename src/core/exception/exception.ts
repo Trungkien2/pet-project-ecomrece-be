@@ -199,6 +199,15 @@ export const EXCEPTION = {
     statusCode: HttpStatus.BAD_REQUEST,
     type: 'email_registered',
   },
+  EMAIL_NOT_FOUND: {
+    message: {
+      en: 'Email not found.',
+      ko: '이메일을 찾을 수 없습니다.',
+    },
+    httpCode: HttpStatus.BAD_REQUEST,
+    statusCode: HttpStatus.BAD_REQUEST,
+    type: 'email_not_found',
+  },
   NAME_ALREADY_REGISTERED: {
     message: {
       en: 'Name already registered.',

@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs/cache-manager": "^2.3.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.3.2",
     "@nestjs/core": "^9.0.0",
@@ -27,17 +28,24 @@
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^7.1.1",
+    "@types/bcrypt": "^6.0.0",
+    "@types/nodemailer": "^6.4.17",
+    "@types/passport-google-oauth20": "^2.0.16",
     "bcrypt": "^5.1.0",
+    "cache-manager": "^5.7.6",
     "class-validator": "^0.14.0",
     "dotenv": "^16.0.3",
     "lodash": "^4.17.21",
     "mysql2": "^3.3.2",
+    "nodemailer": "^7.0.5",
     "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "sequelize": "^6.31.1",
-    "sequelize-typescript": "^2.1.5"
+    "sequelize-typescript": "^2.1.5",
+    "webpack": "^5.100.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
@@ -79,6 +87,9 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/$1"
+    }
   }
 }

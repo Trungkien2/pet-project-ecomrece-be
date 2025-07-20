@@ -8,7 +8,19 @@ import {
   PrimaryKey,
   CreatedAt,
   UpdatedAt,
+  BelongsToMany,
 } from 'sequelize-typescript';
+import { UserFollow } from './user-follow.entity';
+
+export enum AccountType {
+  IN_APP = 'IN_APP',
+  GOOGLE = 'GOOGLE',
+}
+
+export enum Gender {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+}
 
 @Table({
   tableName: 'tbl_user',
@@ -40,6 +52,37 @@ export class User extends Model<User> {
   password: string;
 
   @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  user_name: string;
+
+  @Column({
+    type: DataType.ENUM(...Object.values(AccountType)),
+    allowNull: false,
+    defaultValue: AccountType.IN_APP,
+  })
+  account_type: AccountType;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  picture: string;
+
+  @Column({
+    type: DataType.TEXT,
+    allowNull: true,
+  })
+  bio: string;
+
+  @Column({
+    type: DataType.ENUM(...Object.values(Gender)),
+    allowNull: true,
+  })
+  gender: Gender;
+
+  @Column({
     type: DataType.BIGINT,
     defaultValue: 0,
   })
@@ -60,4 +103,20 @@ export class User extends Model<User> {
 
   @UpdatedAt
   UpdatedAt: Date;
+
+  @BelongsToMany(() => User, {
+    through: () => UserFollow,
+    foreignKey: 'follower_id',
+    otherKey: 'following_id',
+    as: 'following',
+  })
+  following: User[];
+
+  @BelongsToMany(() => User, {
+    through: () => UserFollow,
+    foreignKey: 'following_id',
+    otherKey: 'follower_id',
+    as: 'followers',
+  })
+  followers: User[];
 }
