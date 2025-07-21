@@ -14,6 +14,7 @@ import { LogsMiddleware, QueryMiddleware } from './core/middlewares';
 import { APP_FILTER, RouterModule } from '@nestjs/core';
 import { ApiRoute, allModule } from './router';
 import { AuthModule } from './auth/auth.module';
+import { EmailModule } from './email/email.module';
 import { AllExceptionsFilter } from './core/filter/all-exception.filter';
 
 @Module({
@@ -21,6 +22,7 @@ import { AllExceptionsFilter } from './core/filter/all-exception.filter';
     DatabaseModule,
     ConfigModule.forRoot({ isGlobal: true }),
     // RouterModule.register(ApiRoute),
+    EmailModule,
     ...allModule,
     AuthModule,
   ],

@@ -10,11 +10,18 @@ import {
 import { EXCEPTION } from '../exception/exception';
 import { DatabaseException, RouterException } from '../exception';
 import { sequelize } from '../database/database.providers';
+import { getPagination, IPaginationResult } from '../helper';
 import _ from 'lodash';
 
 export interface ICrudExecOption {
   allowNull?: boolean;
   errorCustom?: Error;
+}
+
+export interface IPaginatedResult<T> {
+  data: T[];
+  pagination: IPaginationResult;
+  total: number;
 }
 
 @Injectable()
@@ -27,6 +34,30 @@ export class CrudService<T extends Model<T>> {
   async getList(queryInfo?: QueryInfoDto) {
     return await this.exec(this.model.findAndCountAll<T>(queryInfo));
   }
+
+  async getListWithPagination(
+    queryInfo?: QueryInfoDto,
+    page: number = 1,
+    limit: number = 10
+  ): Promise<IPaginatedResult<T>> {
+    const offset = (page - 1) * limit;
+    const result = await this.exec(
+      this.model.findAndCountAll<T>({
+        ...queryInfo,
+        limit,
+        offset,
+      })
+    );
+
+    const pagination = getPagination(page, limit, result.count);
+
+    return {
+      data: result.rows,
+      total: result.count,
+      pagination,
+    };
+  }
+
   async getItem(queryInfo?: QueryInfoDto) {
     return await this.exec(this.model.findOne<T>(queryInfo), {
       allowNull: false,
