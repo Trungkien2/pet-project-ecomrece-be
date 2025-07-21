@@ -10,7 +10,6 @@ import {
   UpdatedAt,
   BelongsToMany,
 } from 'sequelize-typescript';
-import { UserFollow } from './user-follow.entity';
 
 export enum AccountType {
   IN_APP = 'IN_APP',
@@ -104,19 +103,5 @@ export class User extends Model<User> {
   @UpdatedAt
   UpdatedAt: Date;
 
-  @BelongsToMany(() => User, {
-    through: () => UserFollow,
-    foreignKey: 'follower_id',
-    otherKey: 'following_id',
-    as: 'following',
-  })
-  following: User[];
 
-  @BelongsToMany(() => User, {
-    through: () => UserFollow,
-    foreignKey: 'following_id',
-    otherKey: 'follower_id',
-    as: 'followers',
-  })
-  followers: User[];
 }

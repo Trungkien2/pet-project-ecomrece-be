@@ -1,73 +1,162 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Cấu trúc thư mục `src/`
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Thư mục `src/` là nơi chứa toàn bộ mã nguồn chính của ứng dụng NestJS. Dưới đây là mô tả chi tiết các thành phần và vai trò của từng thư mục/file:
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ yarn install
+```
+src/
+│
+├── app.controller.ts        // Controller gốc, ví dụ cho cấu trúc controller
+├── app.module.ts            // Module gốc, khởi tạo các module con
+├── app.service.ts           // Service gốc, ví dụ cho cấu trúc service
+├── main.ts                  // Điểm khởi chạy ứng dụng NestJS
+├── router.ts                // Định nghĩa các route động (nếu có)
+│
+├── auth/                    // Module xác thực (authentication)
+│   ├── auth.controller.ts       // Xử lý các endpoint liên quan đến xác thực
+│   ├── auth.module.ts           // Định nghĩa module xác thực
+│   ├── auth.service.ts          // Xử lý logic xác thực
+│   ├── dto/                     // Các Data Transfer Object cho auth
+│   │   ├── auth-advanced.dto.ts
+│   │   ├── create-auth.dto.ts
+│   │   ├── login-auth.dto.ts
+│   │   └── update-auth.dto.ts
+│   └── ... (test, spec)
+│
+├── core/                    // Các thành phần cốt lõi, dùng chung toàn hệ thống
+│   ├── Base/                    // CRUD controller/service dùng chung
+│   │   ├── crud.controller.ts
+│   │   └── crud.service.ts
+│   ├── common/                  // Tiện ích chung (ví dụ: transaction manager)
+│   │   └── transactionManager.ts
+│   ├── contanst/                // Enum, hằng số (lưu ý typo: nên là constants)
+│   │   └── language.enum.ts
+│   ├── contants/                // Hằng số chung (lưu ý typo: nên là constants)
+│   │   └── index.ts
+│   ├── database/                // Cấu hình và provider cho database
+│   │   ├── database.config.ts
+│   │   ├── database.module.ts
+│   │   ├── database.providers.ts
+│   │   └── entity.ts
+│   ├── decorator/               // Các custom decorator
+│   │   ├── public-private.decorator.ts
+│   │   ├── public.decorator.ts
+│   │   └── query-info.decorator.ts
+│   ├── exception/               // Xử lý exception, custom exception
+│   │   ├── base.exception.ts
+│   │   ├── exception.ts
+│   │   └── index.ts
+│   ├── filter/                  // Exception filter
+│   │   ├── all-exception.filter.ts
+│   │   └── index.ts
+│   ├── guards/                  // Guard (ví dụ: JWT guard)
+│   │   └── jwt-auth.guard.ts
+│   ├── helper/                  // Helper function dùng chung
+│   │   └── index.ts
+│   ├── interface/               // Định nghĩa interface, DTO dùng chung
+│   │   ├── db.interface.ts
+│   │   ├── exception.interface.ts
+│   │   └── query-info.dto.ts
+│   ├── middlewares/             // Middleware custom
+│   │   ├── checkToken.middleware.ts
+│   │   ├── logs.middleware.ts
+│   │   ├── query.middleware.ts
+│   │   └── index.ts
+│   └── respone/                 // Định nghĩa response chuẩn
+│       └── http-respone.ts
+│
+├── email/                   // Module gửi email
+│   ├── email.module.ts
+│   └── email.service.ts
+│
+└── user/                    // Module quản lý user
+    ├── user.controller.ts       // Xử lý các endpoint liên quan đến user
+    ├── user.dto.ts              // Định nghĩa DTO cho user
+    ├── user.entity.ts           // Định nghĩa entity user
+    ├── user.module.ts           // Định nghĩa module user
+    ├── user.providers.ts        // Provider cho user
+    ├── user.service.ts          // Xử lý logic liên quan đến user
+    └── ... (test, spec)
 ```
 
-## Running the app
+### Giải thích thêm
 
-```bash
-# development
-$ yarn run start
+- **Module**: Mỗi thư mục lớn như `auth/`, `user/`, `email/` là một module độc lập, tuân theo kiến trúc module của NestJS.
+- **core/**: Chứa các thành phần dùng chung, tiện ích, custom decorator, middleware, guard, exception, filter, interface, helper, v.v.
+- **database/**: Cấu hình, provider, entity liên quan đến database.
+- **decorator/**: Các decorator tự định nghĩa để dùng cho controller, method, v.v.
+- **middlewares/**: Các middleware custom cho request/response.
+- **exception/**, **filter/**: Xử lý lỗi và filter lỗi toàn cục.
+- **respone/**: Chuẩn hóa response trả về client.
+- **contanst/**, **contants/**: Lưu ý có thể bị typo, nên thống nhất lại thành `constants/`.
 
-# watch mode
-$ yarn run start:dev
+### Lưu ý khi phát triển
 
-# production mode
-$ yarn run start:prod
-```
+- Tuân thủ chuẩn module hóa của NestJS.
+- Đặt tên file, thư mục rõ ràng, nhất quán.
+- Tách biệt rõ ràng giữa controller, service, module, DTO, entity.
+- Sử dụng các thành phần trong `core/` để tránh lặp lại code.
+- Đọc kỹ các custom decorator, middleware, guard để hiểu luồng xử lý request/response.
 
-## Test
+## Detailed Explanation of the `src/core/` Module (Based on Actual Code)
 
-```bash
-# unit tests
-$ yarn run test
+The `src/core/` directory contains core components, utilities, and shared logic used throughout the application. Below is a detailed explanation of each subfolder and file, based on the actual code:
 
-# e2e tests
-$ yarn run test:e2e
+### 1. Base/
+- **crud.controller.ts**: Defines a generic CRUD controller for entities, using custom decorators (`@Public`, `@PublicPrivate`, `@ApiQueryInfo`, `@QueryInfo`) to control access and extract query info. Integrates with the CRUD service for DB operations and provides standardized response helpers.
+- **crud.service.ts**: Generic CRUD service for Sequelize entities. Provides methods for list, pagination, item, create, update, bulk update, delete, deleteAll, transaction, and error handling. Integrates with custom exceptions and pagination helpers.
 
-# test coverage
-$ yarn run test:cov
-```
+### 2. common/
+- **transactionManager.ts**: Service for managing Sequelize transactions. Provides `transaction()` to create a new transaction and `executeInTransaction()` to run a callback within a transaction, handling commit/rollback automatically.
 
-## Support
+### 3. contanst/ (typo, should be constants)
+- **language.enum.ts**: Enum `HostLanguage` for supported languages (e.g., 'ko', 'en'), used for multi-language support.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### 4. contants/ (typo, should be constants)
+- **index.ts**: Common constants for the app, such as `SEQUELIZE`, `DEVELOPMENT`, `TEST`, `PRODUCTION`, `USER_REPOSITORY`.
 
-## Stay in touch
+### 5. database/
+- **entity.ts**: Re-exports the user entity for centralized Sequelize entity imports.
+- **database.config.ts**: Database configuration for different environments (development, test, production), reading from environment variables.
+- **database.module.ts**: Declares the NestJS database module, exporting database providers.
+- **database.providers.ts**: Defines Sequelize providers, configures entities, sets up hooks for create/update/destroy, and exports aliases, entities, and the sequelize instance.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### 6. decorator/
+- **query-info.decorator.ts**: Custom decorator `@QueryInfo()` to extract query info from requests, and `@ApiQueryInfo()` for Swagger documentation. Defines `QueryDto` for query parameters.
+- **public-private.decorator.ts**: Decorator `@PublicPrivate()` to mark routes as public/private using metadata.
+- **public.decorator.ts**: Decorator `@Public()` to mark routes as public (no authentication required).
 
-## License
+### 7. exception/
+- **exception.ts**: Defines the `EXCEPTION` object with many error types, multi-language messages, status codes, and types for database, auth, user, router, etc.
+- **base.exception.ts**: `BaseException` class extends Error, standardizes custom exceptions using the `IException` interface.
+- **index.ts**: Exports main exceptions and defines special exceptions (`AuthException`, `RouterException`, `DatabaseException`, `FirebaseException`) extending `BaseException` with default error types.
 
-Nest is [MIT licensed](LICENSE).
+### 8. filter/
+- **all-exception.filter.ts**: Global exception filter for NestJS. Catches all errors, logs them, and returns a standardized response (with language support) using `HttpResponse`.
+- **index.ts**: (Empty, can be used to export filters.)
+
+### 9. guards/
+- **jwt-auth.guard.ts**: JWT authentication guard for NestJS. Extracts token from header, verifies it with JwtService, attaches payload to request, or throws UnauthorizedException if invalid.
+
+### 10. helper/
+- **index.ts**: Defines `IPaginationResult` and `getPagination()` for calculating pagination info (current_page, next_page, prev_page, total_pages, total_count, limit, offset).
+
+### 11. interface/
+- **db.interface.ts**: Interfaces for database configuration (`IDatabaseConfigAttributes`, `IDatabaseConfig`).
+- **exception.interface.ts**: Interfaces for exceptions (`IHLException` for multi-language messages, `IException` for standardized error structure).
+- **query-info.dto.ts**: `QueryInfoDto` class for advanced query parameters (where, limit, page, offset, order, attributes, include, distinct, paranoid, transaction, etc.).
+
+### 12. middlewares/
+- **query.middleware.ts**: Middleware for advanced query parameter parsing. Parses where, order, fields, limit, page, offset, attributes, include, paranoid, and attaches to `req.queryInfo`.
+- **checkToken.middleware.ts**: Middleware to check token in header and decode it using JwtService (does not fully validate, just decodes).
+- **logs.middleware.ts**: Middleware for detailed request/response logging: method, url, status, duration, ip, user-agent, content-length, query, sanitized body, and logs to console and NestJS logger.
+- **index.ts**: Exports main middlewares.
+
+### 13. respone/
+- **http-respone.ts**: Defines `HttpResponse<T>` and `HttpResponseBuilder<T>` for standardized client responses (statusCode, type, message, data), with Swagger integration for response documentation.
+
+---
+
+> **Note:** There are some typos in folder names (`contanst`, `contants`, `respone`). It is recommended to rename them to `constants` and `response` for consistency and clarity.
+
+This section is based on the actual code and will help developers understand the purpose and usage of each file in the `core` module. For further details on any specific file, see the code comments or ask for a deep dive into that file.

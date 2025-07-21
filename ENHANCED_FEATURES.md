@@ -8,18 +8,7 @@ This document describes the advanced features that have been integrated into the
 
 ### 1. Enhanced User System
 
-#### User Entity Enhancements
-- **user_name**: Optional username field
-- **account_type**: ENUM ('IN_APP', 'GOOGLE') for different authentication types
-- **picture**: User avatar/profile image URL
-- **bio**: User biography/description
-- **gender**: ENUM ('MALE', 'FEMALE')
 
-#### Follow System
-- Users can follow and unfollow each other
-- Get followers list with pagination
-- Get following list with pagination
-- Discover new users to follow
 
 ### 2. Advanced Authentication
 
