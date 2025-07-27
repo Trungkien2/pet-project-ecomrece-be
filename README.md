@@ -1,162 +1,210 @@
+# Pet Project E-commerce Backend
 
-## Cấu trúc thư mục `src/`
+[![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)](https://nestjs.com/)
+[![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)](https://sequelize.org/)
 
-Thư mục `src/` là nơi chứa toàn bộ mã nguồn chính của ứng dụng NestJS. Dưới đây là mô tả chi tiết các thành phần và vai trò của từng thư mục/file:
+A comprehensive e-commerce backend built with NestJS, featuring advanced authentication, user management, and a scalable architecture ready for e-commerce functionalities.
+
+## 🚀 Features
+
+- **Authentication & Authorization**: JWT-based authentication with Google OAuth integration
+- **User Management**: Complete user system with roles and permissions
+- **Email Service**: Integrated email functionality with Nodemailer
+- **Database**: MySQL with Sequelize ORM and TypeScript
+- **Advanced Features**: Caching, logging, error handling, and API documentation
+- **Modular Architecture**: Clean, scalable code structure following NestJS best practices
+
+## 🛠️ Tech Stack
+
+- **Framework**: NestJS
+- **Language**: TypeScript
+- **Database**: MySQL
+- **ORM**: Sequelize with TypeScript
+- **Authentication**: JWT, Passport, Google OAuth
+- **Documentation**: Swagger
+- **Email**: Nodemailer
+- **Caching**: Cache Manager
+- **Testing**: Jest
+
+## 📦 Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Trungkien2/pet-project-ecomrece-be.git
+cd pet-project-ecomrece-be
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your configuration
+
+# Run database migrations
+npm run migration:run
+
+# Start the application
+npm run start:dev
+```
+
+## 🔧 Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+# Database
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=your_db_username
+DB_PASSWORD=your_db_password
+DB_DATABASE=ecommerce_db
+DB_DIALECT=mysql
+
+# JWT
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRES_IN=7d
+
+# Google OAuth
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+# Email
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USER=your_email
+MAIL_PASS=your_email_password
+
+# App
+PORT=3000
+NODE_ENV=development
+```
+
+## 📁 Project Structure
 
 ```
 src/
 │
-├── app.controller.ts        // Controller gốc, ví dụ cho cấu trúc controller
-├── app.module.ts            // Module gốc, khởi tạo các module con
-├── app.service.ts           // Service gốc, ví dụ cho cấu trúc service
-├── main.ts                  // Điểm khởi chạy ứng dụng NestJS
-├── router.ts                // Định nghĩa các route động (nếu có)
+├── app.controller.ts        # Root controller
+├── app.module.ts           # Root module
+├── app.service.ts          # Root service
+├── main.ts                 # Application entry point
+├── router.ts               # Dynamic routes definition
 │
-├── auth/                    // Module xác thực (authentication)
-│   ├── auth.controller.ts       // Xử lý các endpoint liên quan đến xác thực
-│   ├── auth.module.ts           // Định nghĩa module xác thực
-│   ├── auth.service.ts          // Xử lý logic xác thực
-│   ├── dto/                     // Các Data Transfer Object cho auth
-│   │   ├── auth-advanced.dto.ts
-│   │   ├── create-auth.dto.ts
-│   │   ├── login-auth.dto.ts
-│   │   └── update-auth.dto.ts
-│   └── ... (test, spec)
+├── auth/                   # Authentication module
+│   ├── auth.controller.ts
+│   ├── auth.module.ts
+│   ├── auth.service.ts
+│   └── dto/               # Authentication DTOs
 │
-├── core/                    // Các thành phần cốt lõi, dùng chung toàn hệ thống
-│   ├── Base/                    // CRUD controller/service dùng chung
-│   │   ├── crud.controller.ts
-│   │   └── crud.service.ts
-│   ├── common/                  // Tiện ích chung (ví dụ: transaction manager)
-│   │   └── transactionManager.ts
-│   ├── contanst/                // Enum, hằng số (lưu ý typo: nên là constants)
-│   │   └── language.enum.ts
-│   ├── contants/                // Hằng số chung (lưu ý typo: nên là constants)
-│   │   └── index.ts
-│   ├── database/                // Cấu hình và provider cho database
-│   │   ├── database.config.ts
-│   │   ├── database.module.ts
-│   │   ├── database.providers.ts
-│   │   └── entity.ts
-│   ├── decorator/               // Các custom decorator
-│   │   ├── public-private.decorator.ts
-│   │   ├── public.decorator.ts
-│   │   └── query-info.decorator.ts
-│   ├── exception/               // Xử lý exception, custom exception
-│   │   ├── base.exception.ts
-│   │   ├── exception.ts
-│   │   └── index.ts
-│   ├── filter/                  // Exception filter
-│   │   ├── all-exception.filter.ts
-│   │   └── index.ts
-│   ├── guards/                  // Guard (ví dụ: JWT guard)
-│   │   └── jwt-auth.guard.ts
-│   ├── helper/                  // Helper function dùng chung
-│   │   └── index.ts
-│   ├── interface/               // Định nghĩa interface, DTO dùng chung
-│   │   ├── db.interface.ts
-│   │   ├── exception.interface.ts
-│   │   └── query-info.dto.ts
-│   ├── middlewares/             // Middleware custom
-│   │   ├── checkToken.middleware.ts
-│   │   ├── logs.middleware.ts
-│   │   ├── query.middleware.ts
-│   │   └── index.ts
-│   └── respone/                 // Định nghĩa response chuẩn
-│       └── http-respone.ts
+├── core/                  # Core utilities and shared components
+│   ├── Base/             # Generic CRUD controller/service
+│   ├── common/           # Common utilities
+│   ├── database/         # Database configuration
+│   ├── decorator/        # Custom decorators
+│   ├── exception/        # Exception handling
+│   ├── filter/          # Exception filters
+│   ├── guards/          # Authentication guards
+│   ├── interface/       # TypeScript interfaces
+│   ├── middlewares/     # Custom middlewares
+│   └── response/        # Standardized responses
 │
-├── email/                   // Module gửi email
+├── email/               # Email service module
 │   ├── email.module.ts
 │   └── email.service.ts
 │
-└── user/                    // Module quản lý user
-    ├── user.controller.ts       // Xử lý các endpoint liên quan đến user
-    ├── user.dto.ts              // Định nghĩa DTO cho user
-    ├── user.entity.ts           // Định nghĩa entity user
-    ├── user.module.ts           // Định nghĩa module user
-    ├── user.providers.ts        // Provider cho user
-    ├── user.service.ts          // Xử lý logic liên quan đến user
-    └── ... (test, spec)
+└── user/               # User management module
+    ├── user.controller.ts
+    ├── user.entity.ts
+    ├── user.module.ts
+    ├── user.service.ts
+    └── user.dto.ts
 ```
 
-### Giải thích thêm
+## 🎯 Core Features Explanation
 
-- **Module**: Mỗi thư mục lớn như `auth/`, `user/`, `email/` là một module độc lập, tuân theo kiến trúc module của NestJS.
-- **core/**: Chứa các thành phần dùng chung, tiện ích, custom decorator, middleware, guard, exception, filter, interface, helper, v.v.
-- **database/**: Cấu hình, provider, entity liên quan đến database.
-- **decorator/**: Các decorator tự định nghĩa để dùng cho controller, method, v.v.
-- **middlewares/**: Các middleware custom cho request/response.
-- **exception/**, **filter/**: Xử lý lỗi và filter lỗi toàn cục.
-- **respone/**: Chuẩn hóa response trả về client.
-- **contanst/**, **contants/**: Lưu ý có thể bị typo, nên thống nhất lại thành `constants/`.
+### Authentication System
+- JWT-based authentication
+- Google OAuth integration
+- Role-based access control
+- Password encryption with bcrypt
 
-### Lưu ý khi phát triển
+### Database Layer
+- Sequelize ORM with TypeScript
+- Automatic migrations
+- Transaction management
+- Connection pooling
 
-- Tuân thủ chuẩn module hóa của NestJS.
-- Đặt tên file, thư mục rõ ràng, nhất quán.
-- Tách biệt rõ ràng giữa controller, service, module, DTO, entity.
-- Sử dụng các thành phần trong `core/` để tránh lặp lại code.
-- Đọc kỹ các custom decorator, middleware, guard để hiểu luồng xử lý request/response.
+### Error Handling
+- Global exception filter
+- Custom exception types
+- Multi-language error messages
+- Detailed error logging
 
-## Detailed Explanation of the `src/core/` Module (Based on Actual Code)
+### API Documentation
+- Swagger/OpenAPI integration
+- Automatic schema generation
+- Interactive API explorer
 
-The `src/core/` directory contains core components, utilities, and shared logic used throughout the application. Below is a detailed explanation of each subfolder and file, based on the actual code:
+## 🚀 Available Scripts
 
-### 1. Base/
-- **crud.controller.ts**: Defines a generic CRUD controller for entities, using custom decorators (`@Public`, `@PublicPrivate`, `@ApiQueryInfo`, `@QueryInfo`) to control access and extract query info. Integrates with the CRUD service for DB operations and provides standardized response helpers.
-- **crud.service.ts**: Generic CRUD service for Sequelize entities. Provides methods for list, pagination, item, create, update, bulk update, delete, deleteAll, transaction, and error handling. Integrates with custom exceptions and pagination helpers.
+```bash
+# Development
+npm run start:dev          # Start in development mode
+npm run start:debug        # Start in debug mode
 
-### 2. common/
-- **transactionManager.ts**: Service for managing Sequelize transactions. Provides `transaction()` to create a new transaction and `executeInTransaction()` to run a callback within a transaction, handling commit/rollback automatically.
+# Production
+npm run build              # Build the application
+npm run start:prod         # Start in production mode
 
-### 3. contanst/ (typo, should be constants)
-- **language.enum.ts**: Enum `HostLanguage` for supported languages (e.g., 'ko', 'en'), used for multi-language support.
+# Testing
+npm run test               # Run unit tests
+npm run test:watch         # Run tests in watch mode
+npm run test:cov           # Run tests with coverage
+npm run test:e2e           # Run end-to-end tests
 
-### 4. contants/ (typo, should be constants)
-- **index.ts**: Common constants for the app, such as `SEQUELIZE`, `DEVELOPMENT`, `TEST`, `PRODUCTION`, `USER_REPOSITORY`.
+# Code Quality
+npm run lint               # Run ESLint
+npm run format             # Format code with Prettier
+```
 
-### 5. database/
-- **entity.ts**: Re-exports the user entity for centralized Sequelize entity imports.
-- **database.config.ts**: Database configuration for different environments (development, test, production), reading from environment variables.
-- **database.module.ts**: Declares the NestJS database module, exporting database providers.
-- **database.providers.ts**: Defines Sequelize providers, configures entities, sets up hooks for create/update/destroy, and exports aliases, entities, and the sequelize instance.
+## 📚 API Documentation
 
-### 6. decorator/
-- **query-info.decorator.ts**: Custom decorator `@QueryInfo()` to extract query info from requests, and `@ApiQueryInfo()` for Swagger documentation. Defines `QueryDto` for query parameters.
-- **public-private.decorator.ts**: Decorator `@PublicPrivate()` to mark routes as public/private using metadata.
-- **public.decorator.ts**: Decorator `@Public()` to mark routes as public (no authentication required).
+After starting the application, visit `http://localhost:3000/api` to access the Swagger documentation.
 
-### 7. exception/
-- **exception.ts**: Defines the `EXCEPTION` object with many error types, multi-language messages, status codes, and types for database, auth, user, router, etc.
-- **base.exception.ts**: `BaseException` class extends Error, standardizes custom exceptions using the `IException` interface.
-- **index.ts**: Exports main exceptions and defines special exceptions (`AuthException`, `RouterException`, `DatabaseException`, `FirebaseException`) extending `BaseException` with default error types.
+## 🔮 Planned E-commerce Features
 
-### 8. filter/
-- **all-exception.filter.ts**: Global exception filter for NestJS. Catches all errors, logs them, and returns a standardized response (with language support) using `HttpResponse`.
-- **index.ts**: (Empty, can be used to export filters.)
+- **Product Management**: Categories, products, variants, inventory
+- **Order Management**: Shopping cart, checkout, order processing
+- **Payment Integration**: Multiple payment gateways
+- **Shipping**: Shipping methods and tracking
+- **Reviews & Ratings**: Product reviews and rating system
+- **Admin Dashboard**: Management interface
+- **Analytics**: Sales and user analytics
 
-### 9. guards/
-- **jwt-auth.guard.ts**: JWT authentication guard for NestJS. Extracts token from header, verifies it with JwtService, attaches payload to request, or throws UnauthorizedException if invalid.
+## 🤝 Contributing
 
-### 10. helper/
-- **index.ts**: Defines `IPaginationResult` and `getPagination()` for calculating pagination info (current_page, next_page, prev_page, total_pages, total_count, limit, offset).
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### 11. interface/
-- **db.interface.ts**: Interfaces for database configuration (`IDatabaseConfigAttributes`, `IDatabaseConfig`).
-- **exception.interface.ts**: Interfaces for exceptions (`IHLException` for multi-language messages, `IException` for standardized error structure).
-- **query-info.dto.ts**: `QueryInfoDto` class for advanced query parameters (where, limit, page, offset, order, attributes, include, distinct, paranoid, transaction, etc.).
+## 📝 License
 
-### 12. middlewares/
-- **query.middleware.ts**: Middleware for advanced query parameter parsing. Parses where, order, fields, limit, page, offset, attributes, include, paranoid, and attaches to `req.queryInfo`.
-- **checkToken.middleware.ts**: Middleware to check token in header and decode it using JwtService (does not fully validate, just decodes).
-- **logs.middleware.ts**: Middleware for detailed request/response logging: method, url, status, duration, ip, user-agent, content-length, query, sanitized body, and logs to console and NestJS logger.
-- **index.ts**: Exports main middlewares.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### 13. respone/
-- **http-respone.ts**: Defines `HttpResponse<T>` and `HttpResponseBuilder<T>` for standardized client responses (statusCode, type, message, data), with Swagger integration for response documentation.
+## 👨‍💻 Author
+
+**Trungkien2**
+- GitHub: [@Trungkien2](https://github.com/Trungkien2)
+
+## 🙏 Acknowledgments
+
+- NestJS team for the amazing framework
+- All contributors and supporters of this project
 
 ---
 
-> **Note:** There are some typos in folder names (`contanst`, `contants`, `respone`). It is recommended to rename them to `constants` and `response` for consistency and clarity.
-
-This section is based on the actual code and will help developers understand the purpose and usage of each file in the `core` module. For further details on any specific file, see the code comments or ask for a deep dive into that file.
+**Note**: This is a pet project for learning and portfolio purposes. Feel free to use it as a reference or starting point for your own e-commerce projects.
