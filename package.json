@@ -1,10 +1,10 @@
 {
-  "name": "first-nest",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "name": "pet-project-ecommerce-be",
+  "version": "1.0.0",
+  "description": "Pet project e-commerce backend built with NestJS",
+  "author": "Trungkien2",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
