@@ -3,105 +3,83 @@ import {
   Column,
   Model,
   DataType,
-  Default,
-  AllowNull,
   PrimaryKey,
-  CreatedAt,
-  UpdatedAt,
-  BelongsToMany,
+  AutoIncrement,
+  AllowNull,
+  Unique,
+  Default,
+  Index,
 } from 'sequelize-typescript';
 
-export enum AccountType {
-  IN_APP = 'IN_APP',
-  GOOGLE = 'GOOGLE',
-}
-
-export enum Gender {
-  MALE = 'MALE',
-  FEMALE = 'FEMALE',
-}
-
 @Table({
-  tableName: 'tbl_user',
+  tableName: 'user',
+  timestamps: false,
 })
 export class User extends Model<User> {
   @PrimaryKey
-  @AllowNull
-  @Default(DataType.UUIDV1)
-  @Column({
-    type: DataType.UUID,
-  })
-  id: string;
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  name: string;
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-    defaultValue: '',
-  })
-  email: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  password: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: true,
-  })
-  user_name: string;
-
-  @Column({
-    type: DataType.ENUM(...Object.values(AccountType)),
-    allowNull: false,
-    defaultValue: AccountType.IN_APP,
-  })
-  account_type: AccountType;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: true,
-  })
-  picture: string;
-
-  @Column({
-    type: DataType.TEXT,
-    allowNull: true,
-  })
-  bio: string;
-
-  @Column({
-    type: DataType.ENUM(...Object.values(Gender)),
-    allowNull: true,
-  })
-  gender: Gender;
-
+  @AutoIncrement
   @Column({
     type: DataType.BIGINT,
-    defaultValue: 0,
+    allowNull: false,
   })
-  created_at_unix_timestamp: number;
-  @Column({
-    type: DataType.BIGINT,
-    defaultValue: 0,
-  })
-  updated_at_unix_timestamp: number;
+  id!: number;
 
+  @AllowNull(true)
+  @Column({
+    type: DataType.STRING(255),
+  })
+  full_name?: string;
+
+  @AllowNull(true)
+  @Unique
+  @Index('idx_user_email')
+  @Column({
+    type: DataType.STRING(255),
+  })
+  email?: string;
+
+  @AllowNull(true)
+  @Unique
+  @Column({
+    type: DataType.STRING(20),
+  })
+  phone_number?: string;
+
+  @AllowNull(false)
+  @Column({
+    type: DataType.STRING(255),
+  })
+  password_hash!: string;
+
+  @AllowNull(true)
   @Column({
     type: DataType.DATE,
   })
-  deleted_at: string;
+  email_verified_at?: Date;
 
-  @CreatedAt
-  CreatedAt: Date;
+  @AllowNull(true)
+  @Column({
+    type: DataType.DATE,
+  })
+  phone_verified_at?: Date;
 
-  @UpdatedAt
-  UpdatedAt: Date;
+  @AllowNull(true)
+  @Column({
+    type: DataType.STRING(255),
+  })
+  avatar_url?: string;
 
+  @AllowNull(false)
+  @Default(DataType.NOW)
+  @Column({
+    type: DataType.DATE,
+  })
+  created_at!: Date;
 
+  @AllowNull(false)
+  @Default(DataType.NOW)
+  @Column({
+    type: DataType.DATE,
+  })
+  updated_at!: Date;
 }

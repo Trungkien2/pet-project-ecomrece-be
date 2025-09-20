@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: local-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456   # root password
+      MYSQL_DATABASE: petproject-db # tạo sẵn 1 database
+      MYSQL_USER: admin             # user mặc định
+      MYSQL_PASSWORD: 123456        # user password
+    ports:
+      - "3306:3306"                 # map port local -> container
+    volumes:
+      - ./mysql-data:/var/lib/mysql # lưu data ra ngoài (persistent)
