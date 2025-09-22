@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { CrudService } from 'src/core/Base/crud.service';
-import { User } from 'src/user/user.entity';
+import { User } from 'src/users/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';

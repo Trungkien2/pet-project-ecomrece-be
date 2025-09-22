@@ -9,7 +9,7 @@ import { AppService } from './app.service';
 import { DatabaseModule } from './core/database/database.module';
 
 import { ConfigModule } from '@nestjs/config';
-import { UserModule } from './user/user.module';
+import { UserModule } from './users/user.module';
 import { LogsMiddleware, QueryMiddleware } from './core/middlewares';
 import { APP_FILTER, RouterModule } from '@nestjs/core';
 import { ApiRoute, allModule } from './router';
@@ -21,7 +21,7 @@ import { AllExceptionsFilter } from './core/filter/all-exception.filter';
   imports: [
     DatabaseModule,
     ConfigModule.forRoot({ isGlobal: true }),
-    // RouterModule.register(ApiRoute),
+    RouterModule.register(ApiRoute),
     EmailModule,
     ...allModule,
     AuthModule,

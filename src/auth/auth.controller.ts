@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CrudController } from 'src/core/Base/crud.controller';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/users/user.service';
 import { AuthService } from './auth.service';
 import {
   GoogleAuthDto,
