@@ -1,5 +1,10 @@
-import { IsEmail, IsString, MinLength, IsOptional, IsEnum } from 'class-validator';
-import { AccountType, Gender } from 'src/user/user.entity';
+import {
+  IsEmail,
+  IsString,
+  MinLength,
+  IsOptional,
+  IsEnum,
+} from 'class-validator';
 
 export class SendOtpDto {
   @IsEmail()
@@ -58,8 +63,4 @@ export class UpdateProfileDto {
   @IsOptional()
   @IsString()
   bio?: string;
-
-  @IsOptional()
-  @IsEnum(Gender)
-  gender?: Gender;
 }
