@@ -12,7 +12,7 @@ import {
 } from 'sequelize-typescript';
 
 @Table({
-  tableName: 'user',
+  tableName: 'countries',
   timestamps: false,
 })
 export class User extends Model<User> {

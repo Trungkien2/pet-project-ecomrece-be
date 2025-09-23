@@ -7,7 +7,7 @@ async function bootstrap() {
   };
   const app = await NestFactory.create(AppModule, appOptions);
   //global prefix
-  app.setGlobalPrefix('api/v1');
+  // app.setGlobalPrefix('api/v1');
   await app.listen(3002);
 }
 bootstrap();
