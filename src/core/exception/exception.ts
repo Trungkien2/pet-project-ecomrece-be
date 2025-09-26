@@ -504,4 +504,99 @@ export const EXCEPTION = {
     statusCode: HttpStatus.BAD_REQUEST,
     type: 'user_already_reported',
   },
+  //Role
+  ROLE_NAME_ALREADY_EXIST: {
+    message: {
+      en: 'Role name already exist.',
+      ko: '역할 이름이 이미 존재합니다..',
+    },
+    httpCode: HttpStatus.BAD_REQUEST,
+    statusCode: HttpStatus.BAD_REQUEST,
+    type: 'role_name_already_exist',
+  },
+  ROLE_NOT_FOUND: {
+    message: {
+      en: 'role not found.',
+      ko: '역할을 찾을 수 없습니다.', //cần dịch
+    },
+    httpCode: HttpStatus.BAD_REQUEST,
+    statusCode: HttpStatus.BAD_REQUEST,
+    type: 'role_not_found',
+  },
+  //permission
+  PERMISSION_NAME_ALREADY_EXIST: {
+    message: {
+      en: 'Permission name already exist.',
+      ko: '역할 이름이 이미 존재합니다..',
+    },
+    httpCode: HttpStatus.BAD_REQUEST,
+    statusCode: HttpStatus.BAD_REQUEST,
+    type: 'permission_name_already_exist',
+  },
+  PERMISSION_NOT_FOUND: {
+    message: {
+      en: 'Permission not found.',
+      ko: '역할을 찾을 수 없습니다.', //cần dịch
+    },
+    httpCode: HttpStatus.BAD_REQUEST,
+    statusCode: HttpStatus.BAD_REQUEST,
+    type: 'permission_not_found',
+  },
+  //user-role
+  USER_ID_AND_ROLE_ID_IS_REQUIRED: {
+    message: {
+      en: 'user id and role id is required.',
+      ko: '사용자 ID와 역할 ID가 필요합니다.',
+    },
+    httpCode: HttpStatus.BAD_REQUEST,
+    statusCode: HttpStatus.BAD_REQUEST,
+    type: 'user_id_and_role_id_is_required',
+  },
+  USER_ROLE_ALREADY_EXIST: {
+    message: {
+      en: 'user role already exist.',
+      ko: '사용자 역할이 이미 존재합니다.',
+    },
+    httpCode: HttpStatus.BAD_REQUEST,
+    statusCode: HttpStatus.BAD_REQUEST,
+    type: 'user_role_already_exist',
+  },
+  USER_ROLE_IS_NOT_FOUND: {
+    message: {
+      en: 'user role is not found.',
+      ko: '사용자 역할이 이미 존재합니다.',
+    },
+    httpCode: HttpStatus.BAD_REQUEST,
+    statusCode: HttpStatus.BAD_REQUEST,
+    type: 'user_role_is_not_found',
+  },
+  //role-permission
+  PERMISSION_ID_AND_ROLE_ID_IS_REQUIRED: {
+    message: {
+      en: 'permission id and role id is required.',
+      ko: '사용자 ID와 역할 ID가 필요합니다.',
+    },
+    httpCode: HttpStatus.BAD_REQUEST,
+    statusCode: HttpStatus.BAD_REQUEST,
+    type: 'permission_id_and_role_id_is_required',
+  },
+  ROLE_PERMISSION_ALREADY_EXIST: {
+    message: {
+      en: 'permission role already exist.',
+      ko: '사용자 역할이 이미 존재합니다.',
+    },
+    httpCode: HttpStatus.BAD_REQUEST,
+    statusCode: HttpStatus.BAD_REQUEST,
+    type: 'permission_role_already_exist',
+  },
+  ROLE_PERMISSION_IS_NOT_FOUND: {
+    message: {
+      en: 'permission role is not found.',
+      ko: '사용자 역할이 이미 존재합니다.',
+    },
+    httpCode: HttpStatus.BAD_REQUEST,
+    statusCode: HttpStatus.BAD_REQUEST,
+    type: 'permission_role_is_not_found',
+  },
+
 };
