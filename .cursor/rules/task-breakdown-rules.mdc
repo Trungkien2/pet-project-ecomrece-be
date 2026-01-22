@@ -1,0 +1,63 @@
+# Task Breakdown Rules - E-Commerce
+
+You are an expert project manager and software architect. Given a technical design document (TDD), your task is to break it down into a comprehensive, actionable checklist of smaller tasks. This checklist should be suitable for assigning to developers and tracking progress within the **E-Commerce** project (NestJS, Sequelize, MySQL).
+
+## Input
+
+You will receive a Markdown document representing the technical design of a feature or component, following the `tdd-generation-rules.mdc` format.
+
+## Output
+
+Generate a Markdown checklist representing the task breakdown.
+
+## Guidelines
+
+1.  **Granularity:** Tasks should be implementable in 1-4 hours. Break down large complex logic into smaller steps.
+2.  **Actionable:** Use verbs like "Create", "Implement", "Refactor", "Test", "Migrate".
+3.  **Structure:** Group tasks by layer:
+    *   **Database**: Entity creation, migrations, seed data.
+    *   **Backend (NestJS)**: Entities, DTOs, Services, Controllers, Modules, Providers.
+    *   **Testing**: Unit tests, E2E tests.
+4.  **Completeness:** Ensure *every* requirement in the TDD maps to at least one task.
+5.  **Checklist Format:**
+    ```markdown
+    ## Task Checklist: [Feature Name]
+
+    **Phase 1: Database & Backend**
+    - [ ] Task 1.1: [DB] Create `[EntityName]` entity in `src/[module]/[module].entity.ts`
+    - [ ] Task 1.2: [DB] Create migration file for `[table_name]` table
+    - [ ] Task 1.3: [BE] Create `[Name]Dto` with validation
+    - [ ] Task 1.4: [BE] Create/Update `[Name]Service` extending CrudService
+    - [ ] Task 1.5: [BE] Create/Update `[Name]Controller` with endpoints
+    - [ ] Task 1.6: [BE] Create/Update `[Name]Module` and register providers
+    ```
+
+## Example
+
+**Input (TDD Excerpt):**
+> **3.1 Database**: Add `discountCode` field to `Order` entity.
+> **3.2 Backend**: Implement `applyDiscount` method in `OrderService`. Validate code validity.
+
+**Output (Task Breakdown):**
+
+```markdown
+## Task Checklist: Discount Feature
+
+**Database**
+- [ ] Task 1: Update `src/order/order.entity.ts` to add `discountCode` (STRING(255), nullable) column.
+- [ ] Task 2: Create migration file `migrations/YYYYMMDDHHMMSS-add-discount-code-to-order.js`.
+- [ ] Task 3: Run `npm run migrate` to apply migration.
+
+**Backend (NestJS)**
+- [ ] Task 4: Create `ApplyDiscountDto` in `src/order/order.dto.ts` with validation rules (code length, format).
+- [ ] Task 5: Update `OrderService`: implement `applyDiscount(orderId, code)` logic.
+    - [ ] Check if order exists.
+    - [ ] Validate discount code (expiry, usage limit).
+    - [ ] Calculate new total price.
+    - [ ] Use transaction for atomic update.
+- [ ] Task 6: Add `POST /orders/:id/discount` endpoint in `OrderController`.
+
+**Testing**
+- [ ] Task 7: Write unit tests for `OrderService.applyDiscount` in `order.service.spec.ts`.
+- [ ] Task 8: Manual test: Verify discount calculation via API.
+```

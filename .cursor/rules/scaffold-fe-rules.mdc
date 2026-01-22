@@ -1,0 +1,249 @@
+# Scaffold Frontend Rules - E-Commerce
+
+> **Note**: This is a **backend-only** project. Frontend scaffolding is not applicable for the current repository. This rule is kept for reference in case a frontend is added in the future.
+
+You are scaffolding frontend code for the **E-Commerce** project using Next.js. Your goal is to create the **file structure and boilerplate only** - NO complex logic implementation.
+
+## Command
+
+```
+/scaffold-fe
+```
+
+## Input Required
+
+```
+Task document: <task_file>.md
+Technical Design Document: <tdd_file>.md
+Phase: [Phase number, e.g., "Phase 2", "Phase 3"]
+```
+
+## Tech Stack
+
+- **Platform:** Frontend
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript (strict mode)
+- **Styling:** Tailwind CSS
+- **UI Components:** `@repo/ui`, Shadcn UI
+- **Form:** react-hook-form + zod
+- **State:** React hooks, Context (minimal)
+
+## Scaffold Rules
+
+### 1. File Structure
+
+```
+apps/web/
+├── app/
+│   └── (auth)/
+│       └── [route]/
+│           └── page.tsx
+├── components/
+│   └── [feature]/
+│       ├── [component].tsx
+│       └── __tests__/
+│           └── [component].test.tsx
+├── lib/
+│   ├── api/
+│   │   └── [feature].ts
+│   └── validations/
+│       └── [feature].ts
+└── types/
+    └── [feature].ts (if needed)
+```
+
+### 2. Naming Conventions
+
+| Type | Convention | Example |
+|------|------------|---------|
+| File names | kebab-case | `register-form.tsx` |
+| Components | PascalCase | `RegisterForm`, `PasswordStrength` |
+| Functions | camelCase | `calculateStrength()` |
+| Hooks | camelCase with `use` | `useAuth()` |
+| Types/Interfaces | PascalCase | `RegisterFormData` |
+
+### 3. What to Include
+
+**Page (`page.tsx`):**
+- Metadata (title, description)
+- Server Component by default
+- Import and render main component
+- Basic layout structure
+
+**Components:**
+- `'use client'` directive if needed
+- Props interface
+- Basic JSX structure from TDD
+- Placeholder for complex logic: `// TODO: Implement`
+- Import UI components from `@repo/ui` or `@/components/ui`
+
+**Validation Schema (`lib/validations/`):**
+- Zod schemas with all fields
+- Validation rules matching TDD
+- Export types
+
+**API Functions (`lib/api/`):**
+- Interface definitions
+- Function signatures
+- Basic fetch implementation
+- Error handling structure
+
+### 4. What NOT to Include
+
+- Complex state management logic (use TODO)
+- Unit tests (separate task)
+- Responsive breakpoint testing
+- Accessibility testing
+- Extra fields/components not in TDD
+
+### 5. Code Templates
+
+**Page Template:**
+```tsx
+import { Metadata } from 'next';
+import { ComponentName } from '@/components/feature/component-name';
+
+export const metadata: Metadata = {
+  title: '[Title] | TourBooker',
+  description: '[Description]',
+};
+
+export default function PageName() {
+  return (
+    <div className="flex flex-col gap-4">
+      {/* Header */}
+      <div className="text-center">
+        <h1 className="text-2xl font-bold">[Title]</h1>
+        <p className="text-gray-500 mt-2">[Subtitle]</p>
+      </div>
+
+      {/* Main Content */}
+      <ComponentName />
+    </div>
+  );
+}
+```
+
+**Client Component Template:**
+```tsx
+'use client';
+
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { schema, type FormData } from '@/lib/validations/feature';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+
+interface ComponentProps {
+  // Props definition
+}
+
+export function ComponentName({ }: ComponentProps) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
+
+  const onSubmit = async (data: FormData) => {
+    // TODO: Implement submit logic
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {/* Form fields */}
+    </form>
+  );
+}
+```
+
+**Validation Schema Template:**
+```typescript
+import { z } from 'zod';
+
+export const featureSchema = z.object({
+  fieldName: z
+    .string()
+    .min(1, 'Field is required')
+    .min(2, 'Must be at least 2 characters'),
+});
+
+export type FeatureFormData = z.infer<typeof featureSchema>;
+```
+
+**API Function Template:**
+```typescript
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
+export interface RequestType {
+  field: string;
+}
+
+export interface ResponseType {
+  data: unknown;
+}
+
+export async function apiFunction(data: RequestType): Promise<ResponseType> {
+  const response = await fetch(`${API_URL}/endpoint`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Request failed');
+  }
+
+  return response.json();
+}
+```
+
+### 6. Component Categories
+
+| Type | Directive | Use Case |
+|------|-----------|----------|
+| Server Component | (none) | Static pages, data fetching |
+| Client Component | `'use client'` | Forms, interactivity, hooks |
+| Shared UI | Import from `@/components/ui` | Button, Input, etc. |
+
+## Workflow
+
+1. **Read TDD** - Extract frontend design section
+2. **Install Dependencies** - If new packages needed (e.g., `use-debounce`)
+3. **Create Validation Schema** - Zod schemas first
+4. **Create API Functions** - Types and fetch functions
+5. **Create Components** - From smallest to largest
+6. **Create Page** - Import and compose components
+7. **Check Lints** - Ensure no errors
+8. **Update Task Checklist** - Mark tasks as `✅ (Scaffolded)`
+
+## Output Format
+
+After scaffolding, provide:
+
+1. **Files Created/Updated** - Table with file paths and descriptions
+2. **Components** - Table with Component, Type (Server/Client), Description
+3. **Task Status** - Updated checklist items
+4. **Commit Message** - Conventional commit format
+
+```
+feat(fe): scaffold [feature] frontend structure
+
+- Add [schema] validation with zod
+- Add [api] functions for [endpoints]
+- Add [Component] component
+- Add [route] page
+```
+
+## Notes
+
+- Always check existing components before creating new ones
+- Reuse `SocialButtons`, `Input`, `Button` from existing codebase
+- Follow the styling patterns from `login-form.tsx`
+- Use Tailwind classes consistent with existing components
